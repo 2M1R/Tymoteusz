@@ -67,7 +67,7 @@ class TymoteuszBot(ClientXMPP):
 
 
 if __name__ == '__main__':
-    xmpp = TymoteuszBot('bot@tumir.eu/Tymoteusz', '1234', 'n00b.code()@conf.netlab.cz', 'Tymoteusz')
+    xmpp = TymoteuszBot('botjid', 'pass', 'room', 'nick')
 
     if xmpp.connect():
         xmpp.process(block=True)
