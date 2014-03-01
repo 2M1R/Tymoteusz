@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+
+import sys
+
 from sleekxmpp import ClientXMPP
 from sleekxmpp.exceptions import IqError, IqTimeout
 from pyquery import PyQuery as pq
@@ -8,7 +12,7 @@ class TymoteuszBot(ClientXMPP):
         super(TymoteuszBot, self).__init__(jid, password)
 
         self.botname = 'Tymoteusz XMPP Bot'
-        self.botver = '0.2'
+        self.botver = '0.2.30-dev'
 
         self.room = room
         self.nick = nick
@@ -67,7 +71,7 @@ class TymoteuszBot(ClientXMPP):
 
 
 if __name__ == '__main__':
-    xmpp = TymoteuszBot('botjid', 'pass', 'room', 'nick')
+    xmpp = TymoteuszBot(sys.argv[1], sys.argv[2], 'n00b.code()@conf.netlab.cz', 'Tymoteusz')
 
     if xmpp.connect():
         xmpp.process(block=True)
