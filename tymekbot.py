@@ -19,6 +19,7 @@ class TymoteuszBot(ClientXMPP):
         #self.register_plugin('xep_0030')    #Disco
         self.register_plugin('xep_0092')    #Version
         self.register_plugin('xep_0045')    #MUC
+        self.register_plugin('xep_0249')    #Direct MUC Invitations
 
         # version
         self['xep_0092'].software_name = self.botname
@@ -36,6 +37,7 @@ class TymoteuszBot(ClientXMPP):
         self.add_event_handler('session_start', self.start)
         self.add_event_handler('message', self.message)
         self.add_event_handler('groupchat_message', self.muc_message)
+        self.add_event_handler('groupchat_direct_invite', self.joinOnInv)
 
     def start(self, event):
         self.send_presence()
@@ -68,6 +70,9 @@ class TymoteuszBot(ClientXMPP):
         self.send_message(mto=room,
                           mbody='Witam!',
                           mtype='groupchat')
+
+    def joinOnInv(self, msg):
+        self.joinChat(msg['groupchat_invite']['jid'])
 
     def leaveChat(self, room):
         self.send_message(mto=room,
