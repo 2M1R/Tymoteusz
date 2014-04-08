@@ -12,7 +12,7 @@ class TymoteuszBot(ClientXMPP):
         super(TymoteuszBot, self).__init__(jid, password)
 
         self.botname = 'Tymoteusz XMPP Bot'
-        self.botver = '0.2.50-dev'
+        self.botver = '0.3'
 
         self.nick = nick
 
@@ -62,6 +62,8 @@ class TymoteuszBot(ClientXMPP):
                 self.joinChat(arg)
             if cmd == '!leave':
                 self.leaveChat(msg['mucroom'])
+            if cmd == '!disconnect':
+                self.disconnect(wait=True)
 
     def joinChat(self, room):
         self['xep_0045'].joinMUC(room,
@@ -72,7 +74,8 @@ class TymoteuszBot(ClientXMPP):
                           mtype='groupchat')
 
     def joinOnInv(self, msg):
-        self.joinChat(msg['groupchat_invite']['jid'])
+        room = msg['from']
+        self.joinChat(room)
 
     def leaveChat(self, room):
         self.send_message(mto=room,
@@ -102,7 +105,7 @@ class TymoteuszBot(ClientXMPP):
 
 
 if __name__ == '__main__':
-    xmpp = TymoteuszBot(sys.argv[1], sys.argv[2], 'Tymoteusz-dev')
+    xmpp = TymoteuszBot(sys.argv[1], sys.argv[2], 'Tymoteusz')
 
     if xmpp.connect():
         xmpp.process(block=True)
