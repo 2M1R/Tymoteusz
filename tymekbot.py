@@ -12,7 +12,7 @@ class TymoteuszBot(ClientXMPP):
         super(TymoteuszBot, self).__init__(jid, password)
 
         self.botname = 'Tymoteusz XMPP Bot'
-        self.botver = '0.3'
+        self.botver = '0.3.1'
 
         self.nick = nick
 
@@ -92,7 +92,11 @@ class TymoteuszBot(ClientXMPP):
                 try:
                     url = pq(url=word.strip('()<>[]{}'))
                     if url.is_('title'):
-                        title = url('title').text()
+                        try:
+                            title = url('title').text().encode('latin1').decode('utf-8')
+                        except:
+                            title = url('title').text()
+
                         self.send_message(mto=msg['mucroom'],
                                           mbody='[URL] ' + title,
                                           mtype='groupchat')
